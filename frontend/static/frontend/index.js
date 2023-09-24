@@ -22942,9 +22942,32 @@ var savedScrollPositions = {};
 var import_react = __toESM(require_react(), 1);
 var jsx_dev_runtime = __toESM(require_jsx_dev_runtime(), 1);
 var HomePage_default = HomePage = () => {
-  return jsx_dev_runtime.jsxDEV(jsx_dev_runtime.Fragment, {
-    children: "HOME"
-  }, undefined, false, undefined, this);
+  const [nickname, setNickname] = import_react.useState("JijaLoqie");
+  const [cvs, setCvs] = import_react.useState([
+    { title: "gamedev", type: "pdf", content: "content" },
+    { title: "backend", type: "latex", content: "conteeent" },
+    { title: "fullstack", type: "html", content: "conteeeeeent" }
+  ]);
+  return jsx_dev_runtime.jsxDEV("div", {
+    children: [
+      jsx_dev_runtime.jsxDEV("h1", {
+        children: nickname
+      }, undefined, false, undefined, this),
+      jsx_dev_runtime.jsxDEV("div", {
+        children: jsx_dev_runtime.jsxDEV("ul", {
+          children: cvs.map((cv) => jsx_dev_runtime.jsxDEV("li", {
+            children: [
+              cv.title,
+              " (",
+              cv.type,
+              "): ",
+              cv.content
+            ]
+          }, undefined, true, undefined, this))
+        }, undefined, false, undefined, this)
+      }, undefined, false, undefined, this)
+    ]
+  }, undefined, true, undefined, this);
 };
 
 // src/components/CreatePage.js
