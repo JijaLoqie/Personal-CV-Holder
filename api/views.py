@@ -51,7 +51,7 @@ class GetResumeView(APIView):
 
 	def get(self, request, format=None):
 		code = request.GET.get(self.lookup_variable)
-
+		
 		if code == None:
 			return Response({'Bad Request': 'Invalid data.'}, status=status.HTTP_400_BAD_REQUEST)
 		
@@ -72,3 +72,20 @@ class GetResumeView(APIView):
 
 
 
+class DeleteResumeView(APIView):
+	lookup_variable = "code"
+
+	def post(self, request, format=None):
+		code = request.data.get(self.lookup_variable)
+		print(f"{code=}, {self.lookup_variable=}")
+		if code == None:
+			return Response({'Bad Request': 'Invalid data.'}, status=status.HTTP_400_BAD_REQUEST)
+		try:
+			resume = Resume.objects.get(code = code)
+			if resume.host == self.request.session.session_key: #todo: replace session key check with login and password
+				resume.delete()
+				return Response({"Message": "Success"}, status=status.HTTP_200_OK)
+			else:
+				return Response({'error': 'That is not your resume!'}, status=status.HTTP_403_FORBIDDEN)
+		except Resume.DoesNotExist:
+			return Response({'Resume not found': 'Invalid Resume Code'}, status=status.HTTP_404_NOT_FOUND)
